@@ -349,6 +349,16 @@
   .statement ul{margin:0; padding-left:20px;}
   .statement li{margin-bottom:6px;}
 
+  .proof-band{margin-top:36px; background:var(--navy); color:#F6F7F9; border-radius:4px; padding:32px 36px; display:grid; grid-template-columns:1.2fr 1fr; gap:32px; align-items:center;}
+  .proof-band h3{margin:0 0 10px; font-size:26px; color:#FFFFFF;}
+  .proof-band p{margin:0 0 10px; color:#D9DEE5;}
+  .proof-band a{color:#FFFFFF; font-weight:700; text-decoration:underline; text-underline-offset:3px; display:inline-block; min-height:24px;}
+  .proof-scores{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  .proof-scores li{border:1px solid #AEB6C2; border-radius:4px; padding:14px 16px; display:flex; flex-direction:column; align-items:flex-start;}
+  .proof-scores .score{font-size:34px; font-weight:700; line-height:1.1; color:#FFFFFF;}
+  .proof-scores .score-name{font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:#D9DEE5;}
+  @media (max-width:800px){ .proof-band{grid-template-columns:1fr; padding:26px 22px;} }
+
 .hero-proof img{height:auto;}
 .vh{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 </style>
@@ -460,6 +470,19 @@
         <div class="service"><h3>Search foundations</h3><p>Page titles, descriptions, business details for Google, a sitemap, and link previews, set up from day one.</p></div>
         <div class="service"><h3>Domain, hosting, and email</h3><p>Your domain connected, fast and secure hosting, and business email with the security records that keep it out of spam.</p></div>
         <div class="service"><h3>Fast, mobile ready, and accessible</h3><p>Lightweight pages that load quickly, read well on phones, and are built to WCAG 2.2 AA accessibility standards so everyone can use them.</p></div>
+      </div>
+      <div class="proof-band">
+        <div class="proof-copy">
+          <h3>Built to score 100.</h3>
+          <p>Adonaviv.com scores 100 on Google PageSpeed for performance, accessibility, best practices, and SEO. Every site we build is held to the same standard.</p>
+          <p><a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fadonaviv.com%2F" target="_blank" rel="noopener">Test it yourself at pagespeed.web.dev<span class="vh"> (opens in a new tab)</span></a></p>
+        </div>
+        <ul class="proof-scores" aria-label="Google PageSpeed scores for adonaviv.com">
+          <li><span class="score">100</span><span class="score-name">Performance</span></li>
+          <li><span class="score">100</span><span class="score-name">Accessibility</span></li>
+          <li><span class="score">100</span><span class="score-name">Best Practices</span></li>
+          <li><span class="score">100</span><span class="score-name">SEO</span></li>
+        </ul>
       </div>
     </div>
   </section>
