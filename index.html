@@ -505,6 +505,19 @@
   .rc-for-opts label:has(input:checked){border-color:var(--navy); box-shadow:inset 0 0 0 1px var(--navy);}
   .contact-form .rc-for-opts label{flex:1 1 220px; flex-direction:row; font-size:16px;}
   .contact-form .rc-for-opts input{width:auto; margin:0; padding:0; flex:none; accent-color:var(--navy);}
+  /* update 8b: one strong main action. Navy on light, gold on navy. */
+  .btn{background:var(--navy); border-color:var(--navy); color:var(--white); transition:background .15s, color .15s, border-color .15s, transform .05s;}
+  .btn:hover, .btn:active{background:var(--gold); border-color:var(--gold); color:var(--navy);}
+  .btn:active{transform:translateY(1px);}
+  .btn.outline:active{transform:translateY(1px);}
+  .on-navy .btn:not(.outline), .partner .btn, .check-band .btn{background:var(--gold); border-color:var(--gold); color:var(--navy);}
+  .on-navy .btn:not(.outline):hover, .on-navy .btn:not(.outline):active, .partner .btn:hover, .check-band .btn:hover{background:var(--white); border-color:var(--white); color:var(--navy);}
+  .on-navy a:focus-visible, .on-navy button:focus-visible{outline-color:var(--white);}
+  a.hero-sample{display:block; text-decoration:none; color:inherit; border-radius:8px;}
+  a.hero-sample .hs-card{transition:border-color .15s, transform .15s;}
+  a.hero-sample:hover .hs-card{border-color:var(--gold); transform:translateY(-2px);}
+  .hs-go{margin:16px 0 0; font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--white); text-decoration:underline; text-underline-offset:4px;}
+  @media (prefers-reduced-motion:reduce){ a.hero-sample:hover .hs-card, .btn:active{transform:none;} }
 
 .hero-proof img{height:auto;}
 .vh{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
@@ -644,7 +657,7 @@
     <nav class="links" id="site-links" aria-label="Main">
       <a href="/education/">Education</a>
       <a href="/team-training/">Team Training</a>
-      <a href="/systems/">Systems &amp; Software</a>
+      <a href="/systems/">Systems &amp; Automation</a>
       <a href="/websites/">Websites</a>
       <a href="/#work">Work</a>
       <a href="#contact">Contact</a>
@@ -668,8 +681,8 @@
         </div>
         <p class="hero-note">Ten questions, about three minutes, results right away.</p>
       </div>
-      <div class="hero-sample" aria-hidden="true">
-        <div class="hs-card">
+      <a class="hero-sample" href="/ai-readiness-check/" aria-label="See your own result: take the free AI Readiness Check">
+        <div class="hs-card" aria-hidden="true">
           <p class="hs-eyebrow">Sample Result</p>
           <div class="hs-top">
             <div class="hs-gauge"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="g-track"/><circle cx="60" cy="60" r="52" class="g-fill" transform="rotate(-90 60 60)" style="stroke-dasharray:179.7 326.7"/></svg><span><b>16</b><small>out of 30</small></span></div>
@@ -682,9 +695,10 @@
             <li><span>Adoption</span><i style="--w:50%"></i></li>
           </ul>
           <p class="hs-gap">Biggest opportunity: Guidance</p>
+          <p class="hs-go">See your own result</p>
         </div>
-        <p class="hs-cap">What you see after the check. Illustrative example.</p>
-      </div>
+        <p class="hs-cap" aria-hidden="true">What you see after the check. Illustrative example.</p>
+      </a>
     </div>
   </section>
 
@@ -738,7 +752,7 @@
       </div>
       <div class="founder-body">
         <p>Shalom Obi started Adonaviv after years of running businesses in housing, real estate, and operations, where she built the systems those businesses run on with the same AI tools she now teaches.</p>
-        <p>She has led a full data migration for an organization moving to a new platform, and she directed a two day international conference with more than 300 attendees and more than 50 volunteers. Both came down to the same skill this training is built on: helping people who are not technical adopt a new way of working.</p>
+        <p>She moved an organization to a new email platform with zero data loss while cutting its software costs by more than 65%, and she directed a two day international conference with more than 300 attendees and more than 50 volunteers. Both came down to the same skill this training is built on: helping people who are not technical adopt a new way of working.</p>
         <p>Every program is taught from practice, not theory. Participants work on their own tasks, and the examples come from tools used every day.</p>
       </div>
     </div>
@@ -827,7 +841,7 @@
   <div class="wrap top">
     <img src="/images/brand/logo-dark.svg" alt="Adonaviv" width="149" height="38" loading="lazy">
     <nav aria-label="Footer">
-      <a href="/education/">Education</a><a href="/team-training/">Team Training</a><a href="/ai-readiness-check/">AI Readiness Check</a><a href="/systems/">Systems &amp; Software</a><a href="/websites/">Websites</a><a href="/#work">Work</a><a href="#contact">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a>
+      <a href="/education/">Education</a><a href="/team-training/">Team Training</a><a href="/ai-readiness-check/">AI Readiness Check</a><a href="/systems/">Systems &amp; Automation</a><a href="/websites/">Websites</a><a href="/#work">Work</a><a href="#contact">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a>
     </nav>
   </div>
   <div class="wrap bottom">

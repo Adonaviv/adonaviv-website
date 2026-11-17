@@ -505,6 +505,19 @@
   .rc-for-opts label:has(input:checked){border-color:var(--navy); box-shadow:inset 0 0 0 1px var(--navy);}
   .contact-form .rc-for-opts label{flex:1 1 220px; flex-direction:row; font-size:16px;}
   .contact-form .rc-for-opts input{width:auto; margin:0; padding:0; flex:none; accent-color:var(--navy);}
+  /* update 8b: one strong main action. Navy on light, gold on navy. */
+  .btn{background:var(--navy); border-color:var(--navy); color:var(--white); transition:background .15s, color .15s, border-color .15s, transform .05s;}
+  .btn:hover, .btn:active{background:var(--gold); border-color:var(--gold); color:var(--navy);}
+  .btn:active{transform:translateY(1px);}
+  .btn.outline:active{transform:translateY(1px);}
+  .on-navy .btn:not(.outline), .partner .btn, .check-band .btn{background:var(--gold); border-color:var(--gold); color:var(--navy);}
+  .on-navy .btn:not(.outline):hover, .on-navy .btn:not(.outline):active, .partner .btn:hover, .check-band .btn:hover{background:var(--white); border-color:var(--white); color:var(--navy);}
+  .on-navy a:focus-visible, .on-navy button:focus-visible{outline-color:var(--white);}
+  a.hero-sample{display:block; text-decoration:none; color:inherit; border-radius:8px;}
+  a.hero-sample .hs-card{transition:border-color .15s, transform .15s;}
+  a.hero-sample:hover .hs-card{border-color:var(--gold); transform:translateY(-2px);}
+  .hs-go{margin:16px 0 0; font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--white); text-decoration:underline; text-underline-offset:4px;}
+  @media (prefers-reduced-motion:reduce){ a.hero-sample:hover .hs-card, .btn:active{transform:none;} }
 
 .hero-proof img{height:auto;}
 .vh{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
@@ -526,7 +539,7 @@
     <nav class="links" id="site-links" aria-label="Main">
       <a href="/education/">Education</a>
       <a href="/team-training/">Team Training</a>
-      <a href="/systems/">Systems &amp; Software</a>
+      <a href="/systems/">Systems &amp; Automation</a>
       <a href="/websites/">Websites</a>
       <a href="/#work">Work</a>
       <a href="#contact">Contact</a>
@@ -542,16 +555,16 @@
       <p class="crumbs"><a href="/">Home</a> &middot; <a href="/education/">Education</a> &middot; AI Readiness Check</p>
       <p class="label">Free AI Readiness Check</p>
       <h1>Is your team ready for AI?</h1>
-      <p class="lede">Ten quick questions about how your team works today, or how you work on your own. You'll see where you stand right away, plus the next step we'd recommend. It takes about three minutes.</p>
+      <p class="lede">Ten quick questions about how your team works today, or how you work on your own. You'll see where you stand right away, plus the next step we'd recommend. It takes about three minutes, and you don't need to sign up to see your result.</p>
     </div>
   </section>
 
   <section class="section" id="check">
     <div class="wrap">
 
-      <form class="contact-form rc-start" id="rc-form" name="readiness-check" method="POST" action="/thanks-check.html" data-netlify="true" netlify-honeypot="company-website">
+      <form class="contact-form rc-start" id="rc-form" name="readiness-check" method="POST" action="/thanks-check.html" data-netlify="true" netlify-honeypot="company-website" hidden>
         <input type="hidden" name="form-name" value="readiness-check">
-        <input type="hidden" name="subject" value="New Adonaviv website inquiry from the AI readiness check">
+        <input type="hidden" name="subject" id="f-subject" value="New Adonaviv website inquiry from the AI readiness check">
         <input type="hidden" name="score" id="f-score">
         <input type="hidden" name="result" id="f-result">
         <input type="hidden" name="answers" id="f-answers">
@@ -559,10 +572,10 @@
         <input type="hidden" name="stage" id="f-stage" value="Started, not finished">
         <input type="hidden" name="event" id="f-event">
         <p class="hp"><label>Leave this empty <input name="company-website" tabindex="-1" autocomplete="off"></label></p>
-        <p class="label">Before You Start</p>
-        <h2>Where should we send your results?</h2>
-        <p class="form-intro">You'll see your result on screen as soon as you finish. We'll also email it to you with a short action plan. No newsletter unless you ask for one. See our <a href="/privacy/">privacy policy</a>.</p>
-        <fieldset class="rc-for">
+        <p class="label" id="rc-label">Before You Start</p>
+        <h2 id="rc-h">Where should we send your results?</h2>
+        <p class="form-intro" id="rc-intro">You'll see your result on screen as soon as you finish. We'll also email it to you with a short action plan. No newsletter unless you ask for one. See our <a href="/privacy/">privacy policy</a>.</p>
+        <fieldset class="rc-for" id="rc-for">
           <legend>Who is this check for?</legend>
           <div class="rc-for-opts">
             <label><input type="radio" name="check_for" value="My team" required checked> My team or organization</label>
@@ -581,10 +594,18 @@
             </select></div>
         </div>
         <button class="btn" type="submit" id="rc-start">Start the Check</button>
+        <p class="form-note" id="rc-note" hidden></p>
       </form>
 
-      <form class="quiz" id="quiz" novalidate hidden>
-                <fieldset><legend><span class="q-num">Question 1 of 10</span><span class="for-team">How often does your team use AI tools in daily work?</span><span class="for-me">How often do you use AI tools in your daily work?</span></legend><div class="opts"><label><input type="radio" name="q1" value="0" required> Never</label><label><input type="radio" name="q1" value="1" required> <span class="for-team">A few people try it now and then</span><span class="for-me">I've tried it once or twice</span></label><label><input type="radio" name="q1" value="2" required> <span class="for-team">Some people use it every week</span><span class="for-me">A few times a week</span></label><label><input type="radio" name="q1" value="3" required> <span class="for-team">Most people use it every day</span><span class="for-me">Every day</span></label></div></fieldset>
+      <form class="quiz" id="quiz" novalidate>
+        <fieldset class="rc-for" id="q-for">
+          <legend>Who is this check for?</legend>
+          <div class="rc-for-opts">
+            <label><input type="radio" name="who" value="My team" checked> My team or organization</label>
+            <label><input type="radio" name="who" value="Just me"> Just me</label>
+          </div>
+        </fieldset>
+        <fieldset><legend><span class="q-num">Question 1 of 10</span><span class="for-team">How often does your team use AI tools in daily work?</span><span class="for-me">How often do you use AI tools in your daily work?</span></legend><div class="opts"><label><input type="radio" name="q1" value="0" required> Never</label><label><input type="radio" name="q1" value="1" required> <span class="for-team">A few people try it now and then</span><span class="for-me">I've tried it once or twice</span></label><label><input type="radio" name="q1" value="2" required> <span class="for-team">Some people use it every week</span><span class="for-me">A few times a week</span></label><label><input type="radio" name="q1" value="3" required> <span class="for-team">Most people use it every day</span><span class="for-me">Every day</span></label></div></fieldset>
         <fieldset><legend><span class="q-num">Question 2 of 10</span><span class="for-team">Does your organization have guidance on which AI tools are allowed and what information can go into them?</span><span class="for-me">Do you know which AI tools your workplace allows and what information should stay out of them?</span></legend><div class="opts"><label><input type="radio" name="q2" value="0" required> <span class="for-team">No guidance at all</span><span class="for-me">No idea</span></label><label><input type="radio" name="q2" value="1" required> <span class="for-team">Informal, word of mouth</span><span class="for-me">I have a rough sense</span></label><label><input type="radio" name="q2" value="2" required> <span class="for-team">Written, but not widely known</span><span class="for-me">I know the basics</span></label><label><input type="radio" name="q2" value="3" required> <span class="for-team">Written, shared, and followed</span><span class="for-me">Yes, and I follow clear rules</span></label></div></fieldset>
         <fieldset><legend><span class="q-num">Question 3 of 10</span><span class="for-team">How comfortable is your team with everyday digital tools like email, shared documents, and online forms?</span><span class="for-me">How comfortable are you with everyday digital tools like email, shared documents, and online forms?</span></legend><div class="opts"><label><input type="radio" name="q3" value="0" required> <span class="for-team">Many people struggle</span><span class="for-me">I often struggle</span></label><label><input type="radio" name="q3" value="1" required> <span class="for-team">Comfort is mixed</span><span class="for-me">Somewhat comfortable</span></label><label><input type="radio" name="q3" value="2" required> <span class="for-team">Most are comfortable</span><span class="for-me">Comfortable</span></label><label><input type="radio" name="q3" value="3" required> <span class="for-team">Nearly everyone is comfortable</span><span class="for-me">Very comfortable</span></label></div></fieldset>
         <fieldset><legend><span class="q-num">Question 4 of 10</span><span class="for-team">Has anyone on your team had training on AI?</span><span class="for-me">Have you had any training on AI?</span></legend><div class="opts"><label><input type="radio" name="q4" value="0" required> <span class="for-team">No one</span><span class="for-me">None</span></label><label><input type="radio" name="q4" value="1" required> <span class="for-team">Only what people taught themselves</span><span class="for-me">Only what I taught myself</span></label><label><input type="radio" name="q4" value="2" required> <span class="for-team">A few people</span><span class="for-me">A short session or course</span></label><label><input type="radio" name="q4" value="3" required> <span class="for-team">Most of the team</span><span class="for-me">Structured training</span></label></div></fieldset>
@@ -620,9 +641,10 @@
         <div class="result-next">
           <h3>Recommended next step</h3>
           <p id="result-next"></p>
-          <a class="btn" id="result-link" href="/education/">See the Program</a>
+          <a class="btn outline" id="result-link" href="/education/">See the Program</a>
         </div>
-        <div class="sent" id="rc-sent" tabindex="-1">
+        <div id="email-slot"></div>
+        <div class="sent" id="rc-sent" tabindex="-1" hidden>
           <h3>Email my results</h3>
           <p id="rc-sent-text">Your results and a short action plan are on the way. Expect them within one business day.</p>
         </div>
@@ -633,28 +655,58 @@
 
 <script>
 (function(){
-  var start=document.getElementById('rc-form'), form=document.getElementById('quiz'); if(!form||!start) return;
-  var qs=form.querySelectorAll('fieldset'), total=qs.length;
+  var start=document.getElementById('rc-form'), form=document.getElementById('quiz'); if(!start||!form) return;
+  var qs=form.querySelectorAll('fieldset:not(.rc-for)'), total=qs.length;
   var prog=document.getElementById('quiz-progress'), note=document.getElementById('quiz-note');
+  var size=document.getElementById('rc-size'), sizeField=document.getElementById('rc-size-field');
+  var result=document.getElementById('result'), sent=document.getElementById('rc-sent'), sentText=document.getElementById('rc-sent-text');
+  var ev=''; try{ ev=(new URLSearchParams(location.search).get('event')||'').slice(0,60); }catch(e){}
+  var eventMode=!!ev, mode='team', emailed=false;
+  document.getElementById('f-event').value=ev;
   function show(el){ el.hidden=false; el.scrollIntoView({block:'start'}); }
-  var size=document.getElementById('rc-size'), sizeField=document.getElementById('rc-size-field'), mode='team';
-  try{ var ev=new URLSearchParams(location.search).get('event'); if(ev) document.getElementById('f-event').value=ev.slice(0,60); }catch(e){}
-  function setMode(){
-    var c=start.querySelector('input[name=check_for]:checked'); mode=(c&&c.value==='Just me')?'me':'team';
-    form.classList.toggle('mode-me',mode==='me'); sizeField.hidden=(mode==='me');
+  function setMode(m){
+    mode=m; form.classList.toggle('mode-me',mode==='me'); sizeField.hidden=(mode==='me');
     if(mode==='me'){ size.value='Just me'; } else if(size.value==='Just me'){ size.value=''; }
+    start.querySelector('input[name=check_for][value="'+(mode==='me'?'Just me':'My team')+'"]').checked=true;
+    form.querySelector('input[name=who][value="'+(mode==='me'?'Just me':'My team')+'"]').checked=true;
     document.querySelector('.page-hero h1').textContent = mode==='me' ? 'Are you ready for AI?' : 'Is your team ready for AI?';
   }
-  [].forEach.call(start.querySelectorAll('input[name=check_for]'),function(r){ r.addEventListener('change',setMode); });
-  size.addEventListener('change',function(){ if(size.value==='Just me'){ start.querySelector('input[value="Just me"]').checked=true; setMode(); } });
+  [].forEach.call(document.querySelectorAll('input[name=check_for],input[name=who]'),function(r){ r.addEventListener('change',function(){ setMode(r.value==='Just me'?'me':'team'); }); });
+  size.addEventListener('change',function(){ if(size.value==='Just me') setMode('me'); });
+  function postData(data){
+    return fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); return r; });
+  }
+  function postStart(){ return postData(new FormData(start)); }
+  function postAnonymous(){
+    var d=new URLSearchParams(); d.append('form-name','readiness-check');
+    d.append('subject','Adonaviv readiness check result, no contact details');
+    ['score','result','answers','areas','event'].forEach(function(k){ d.append(k,document.getElementById('f-'+k).value); });
+    d.append('check_for', mode==='me'?'Just me':'My team'); d.append('stage','Completed, no contact details');
+    return postData(d);
+  }
+
+  if(eventMode){
+    // event links: details first, exactly as before
+    form.hidden=true; start.hidden=false; document.getElementById('q-for').hidden=true;
+  }
   start.addEventListener('submit',function(e){
     e.preventDefault();
     if(!start.checkValidity()){ start.reportValidity(); return; }
-    post().catch(function(){});
-    start.hidden=true; show(form); var first=form.querySelector('input'); if(first) first.focus({preventScroll:true});
+    if(eventMode && result.hidden){
+      postStart().catch(function(){});
+      start.hidden=true; show(form); var first=form.querySelector('fieldset:not(.rc-for) input'); if(first) first.focus({preventScroll:true});
+      return;
+    }
+    // website mode, after the result: email me my results
+    var btn=document.getElementById('rc-start'), rn=document.getElementById('rc-note'); btn.disabled=true;
+    document.getElementById('f-stage').value='Completed, asked for results by email';
+    postStart().then(function(){ emailed=true; start.hidden=true; sentText.textContent='Your results and a short action plan are on the way to '+document.getElementById('rc-email').value+'. Expect them within one business day.'; sent.hidden=false; sent.focus(); })
+      .catch(function(){ btn.disabled=false; rn.hidden=false; rn.textContent='We could not send that just now. Please email hello@adonaviv.com and we will send your results.'; });
   });
+
   function answered(){ var n=0; [].forEach.call(qs,function(f){ if(f.querySelector('input:checked')) n++; }); return n; }
-  form.addEventListener('change',function(){ prog.textContent=answered()+' of '+total+' answered'; note.hidden=true; });
+  form.addEventListener('change',function(e){ if(e.target.name==='who') return; prog.textContent=answered()+' of '+total+' answered'; note.hidden=true; });
   var tiers={team:[
     {max:10,title:'Getting started',body:'Your team is at the beginning. That is common, and it is the easiest place to make fast progress. The first goal is comfort with everyday digital tools and a few safe, simple uses of AI.',next:'Start with AI Workforce Readiness for Employers. It begins with a readiness baseline for every role, including people still building comfort with digital tools, then trains to the gaps it finds.',link:'/team-training/',cta:'See Team Training'},
     {max:20,title:'Building momentum',body:'Some people on your team are already using AI, but it is uneven and mostly self taught. The gap now is shared skills, shared rules, and knowing where AI saves the most time.',next:'A private team program that measures where everyone stands, trains to the gaps, and leaves you with tested workflows.',link:'/team-training/',cta:'See Team Training'},
@@ -664,16 +716,6 @@
     {max:20,title:'Building momentum',body:'You already use AI, but mostly self taught. The next step is a reliable method: better prompts, checking the output, and knowing where AI saves you the most time.',next:'AI for Working Professionals gives you that method and has you practice it on your own work.',link:'/education/#working-professionals',cta:'See AI for Working Professionals'},
     {max:30,title:'Ready to scale',body:'You have strong AI habits. The opportunity now is turning them into tools: reusable assistants, templates, and automations built around your own work.',next:'Systems and automation built around how you work, or a workshop to bring the people around you up to speed.',link:'/systems/',cta:'See Systems and Automation'}
   ]};
-  function post(){
-    return fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(start)).toString()})
-      .then(function(r){ if(!r.ok) throw new Error(r.status); return r; });
-  }
-  function send(){
-    var txt=document.getElementById('rc-sent-text'), email=document.getElementById('rc-email').value;
-    document.getElementById('f-stage').value='Completed';
-    post().then(function(){ txt.textContent='Your results and a short action plan are on the way to '+email+'. Expect them within one business day.'; })
-      .catch(function(){ txt.textContent='We could not send your results just now. Please email hello@adonaviv.com and we will send them to you.'; });
-  }
   form.addEventListener('submit',function(e){
     e.preventDefault();
     if(answered()<total){ note.hidden=false; var first=[].filter.call(qs,function(f){return !f.querySelector('input:checked');})[0]; if(first) first.querySelector('input').focus(); return; }
@@ -693,8 +735,8 @@
     res.forEach(function(a){
       var li=document.createElement('li');
       li.innerHTML='<svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="22" class="a-track"/><circle cx="28" cy="28" r="22" class="a-fill" transform="rotate(-90 28 28)" style="stroke-dasharray:'+(C*a.pct).toFixed(1)+' '+C.toFixed(1)+(a.pct===0?';stroke-linecap:butt':'')+'"/></svg>';
-      var t=document.createElement('div'); var b=document.createElement('b'); b.textContent=a.name; var sc=document.createElement('span'); sc.className='a-score'; sc.textContent=a.got+' of '+a.max; var h=document.createElement('small'); h.textContent=a.hint;
-      t.appendChild(b); t.appendChild(sc); t.appendChild(h); li.appendChild(t); ul.appendChild(li);
+      var d=document.createElement('div'); var b=document.createElement('b'); b.textContent=a.name; var sc=document.createElement('span'); sc.className='a-score'; sc.textContent=a.got+' of '+a.max; var h=document.createElement('small'); h.textContent=a.hint;
+      d.appendChild(b); d.appendChild(sc); d.appendChild(h); li.appendChild(d); ul.appendChild(li);
     });
     var sorted=res.slice().sort(function(x,y){return y.pct-x.pct;}), top=sorted[0], low=sorted[sorted.length-1];
     document.getElementById('rc-gap').textContent = top.pct===low.pct ? 'Your scores are even across all four areas.' : 'Strongest area: '+top.name+'. Biggest opportunity: '+low.name+'.';
@@ -709,10 +751,25 @@
     document.getElementById('f-score').value=score+' of '+max;
     document.getElementById('f-result').value=t.title;
     document.getElementById('f-answers').value=ans.join(' | ');
-    form.hidden=true; var r=document.getElementById('result'); show(r); r.focus({preventScroll:true});
-    send();
+    form.hidden=true; show(result); result.focus({preventScroll:true});
+    if(eventMode){
+      document.getElementById('f-stage').value='Completed';
+      sent.hidden=false;
+      postStart().then(function(){ sentText.textContent='Your results and a short action plan are on the way to '+document.getElementById('rc-email').value+'. Expect them within one business day.'; })
+        .catch(function(){ sentText.textContent='We could not send your results just now. Please email hello@adonaviv.com and we will send them to you.'; });
+    } else {
+      postAnonymous().catch(function(){});
+      if(!emailed){
+        document.getElementById('rc-label').textContent='Free Action Plan';
+        document.getElementById('rc-h').textContent='Email me my results and action plan';
+        document.getElementById('rc-intro').innerHTML='We\'ll send this result and a short action plan for your biggest opportunity within one business day. No newsletter unless you ask for one. See our <a href="/privacy/">privacy policy</a>.';
+        document.getElementById('rc-for').hidden=true;
+        document.getElementById('rc-start').textContent='Email My Results';
+        document.getElementById('email-slot').appendChild(start); start.hidden=false;
+      }
+    }
   });
-  document.getElementById('retake').addEventListener('click',function(){ form.reset(); prog.textContent='0 of '+total+' answered'; document.getElementById('result').hidden=true; show(form); });
+  document.getElementById('retake').addEventListener('click',function(){ form.reset(); setMode(mode); prog.textContent='0 of '+total+' answered'; result.hidden=true; show(form); });
 })();
 </script>
 
@@ -722,7 +779,7 @@
   <div class="wrap top">
     <img src="/images/brand/logo-dark.svg" alt="Adonaviv" width="149" height="38" loading="lazy">
     <nav aria-label="Footer">
-      <a href="/education/">Education</a><a href="/team-training/">Team Training</a><a href="/ai-readiness-check/">AI Readiness Check</a><a href="/systems/">Systems &amp; Software</a><a href="/websites/">Websites</a><a href="/#work">Work</a><a href="#contact">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a>
+      <a href="/education/">Education</a><a href="/team-training/">Team Training</a><a href="/ai-readiness-check/">AI Readiness Check</a><a href="/systems/">Systems &amp; Automation</a><a href="/websites/">Websites</a><a href="/#work">Work</a><a href="#contact">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a>
     </nav>
   </div>
   <div class="wrap bottom">
