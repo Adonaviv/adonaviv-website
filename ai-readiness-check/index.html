@@ -431,6 +431,35 @@
   @media (min-width:1121px){ nav.links{gap:26px; flex-wrap:nowrap;} }
   .hero-check{border-left-width:1px; border-left-color:rgba(174,182,194,0.55);}
   @media (max-width:1120px){ .nav-inner .nav-cta{margin-left:auto;} .nav-inner .menu-toggle{margin-left:12px;} }
+  .rc-start{margin-top:0;}
+  .rc-start h2{font-size:clamp(24px,3.4vw,30px); margin-bottom:8px;}
+  .result-card{background:var(--navy); color:var(--white); border-radius:6px; padding:clamp(28px,5vw,48px) clamp(20px,4vw,40px); text-align:center; display:flex; flex-direction:column; align-items:center;}
+  .rc-eyebrow{font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin:0 0 18px;}
+  .gauge{position:relative; width:150px; height:150px; margin-bottom:18px;}
+  .gauge svg{width:100%; height:100%;}
+  .g-track{fill:none; stroke:rgba(255,255,255,0.14); stroke-width:10;}
+  .g-fill{fill:none; stroke:var(--gold); stroke-width:10; stroke-linecap:round; stroke-dasharray:0 400; transition:stroke-dasharray .9s ease;}
+  .g-num{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+  .g-num b{font-size:44px; line-height:1; color:var(--gold);}
+  .g-num small{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--on-navy-muted); margin-top:4px;}
+  .result .result-card h2{color:var(--white); font-size:clamp(34px,6vw,54px); line-height:1.05;}
+  .rc-score{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);}
+  .rc-body{color:var(--on-navy); font-size:18px; max-width:56ch; margin-top:14px;}
+  .result .result-next{text-align:left;}
+  .result .sent{margin-top:20px;}
+  @media (prefers-reduced-motion:reduce){ .g-fill{transition:none;} }
+  .areas-wrap{width:100%; margin-top:30px; padding-top:26px; border-top:1px solid rgba(255,255,255,0.14);}
+  .area-scores{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; text-align:left;}
+  .area-scores li{display:flex; gap:14px; align-items:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:6px; padding:14px 16px; min-width:0;}
+  .area-scores svg{width:52px; height:52px; flex:none;}
+  .a-track{fill:none; stroke:rgba(255,255,255,0.14); stroke-width:6;}
+  .a-fill{fill:none; stroke:var(--gold); stroke-width:6; stroke-linecap:round;}
+  .area-scores div{display:flex; flex-direction:column; min-width:0;}
+  .area-scores b{font-size:17px; color:var(--white);}
+  .a-score{font-size:14px; font-weight:700; color:var(--gold);}
+  .area-scores small{font-size:13px; color:var(--on-navy-muted); line-height:1.4; margin-top:2px;}
+  .rc-gap{margin:18px 0 0; font-size:16px; font-weight:700; color:var(--white);}
+  @media (max-width:640px){ .area-scores{grid-template-columns:1fr;} }
 
 .hero-proof img{height:auto;}
 .vh{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
@@ -474,7 +503,34 @@
 
   <section class="section" id="check">
     <div class="wrap">
-      <form class="quiz" id="quiz" novalidate>
+
+      <form class="contact-form rc-start" id="rc-form" name="readiness-check" method="POST" action="/thanks-check.html" data-netlify="true" netlify-honeypot="company-website">
+        <input type="hidden" name="form-name" value="readiness-check">
+        <input type="hidden" name="subject" value="New Adonaviv website inquiry from the AI readiness check">
+        <input type="hidden" name="score" id="f-score">
+        <input type="hidden" name="result" id="f-result">
+        <input type="hidden" name="answers" id="f-answers">
+        <input type="hidden" name="areas" id="f-areas">
+        <input type="hidden" name="stage" id="f-stage" value="Started, not finished">
+        <p class="hp"><label>Leave this empty <input name="company-website" tabindex="-1" autocomplete="off"></label></p>
+        <p class="label">Before You Start</p>
+        <h2>Where should we send your results?</h2>
+        <p class="form-intro">You'll see your result on screen as soon as you finish. We'll also email it to you with a short action plan. No newsletter unless you ask for one.</p>
+        <div class="row">
+          <div class="field"><label for="rc-name">Name</label><input id="rc-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="rc-email">Email</label><input id="rc-email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="rc-org">Organization <span class="opt">(optional)</span></label><input id="rc-org" name="organization" type="text" autocomplete="organization"></div>
+          <div class="field"><label for="rc-size">Team size</label>
+            <select id="rc-size" name="team_size" required>
+              <option value="">Choose one</option><option>Just me</option><option>2 to 10</option><option>11 to 50</option><option>51 to 200</option><option>More than 200</option>
+            </select></div>
+        </div>
+        <button class="btn" type="submit" id="rc-start">Start the Check</button>
+      </form>
+
+      <form class="quiz" id="quiz" novalidate hidden>
                 <fieldset><legend><span class="q-num">Question 1 of 10</span>How often does your team use AI tools in daily work?</legend><div class="opts"><label><input type="radio" name="q1" value="0" required> Never</label><label><input type="radio" name="q1" value="1" required> A few people try it now and then</label><label><input type="radio" name="q1" value="2" required> Some people use it every week</label><label><input type="radio" name="q1" value="3" required> Most people use it every day</label></div></fieldset>
         <fieldset><legend><span class="q-num">Question 2 of 10</span>Does your organization have guidance on which AI tools are allowed and what information can go into them?</legend><div class="opts"><label><input type="radio" name="q2" value="0" required> No guidance at all</label><label><input type="radio" name="q2" value="1" required> Informal, word of mouth</label><label><input type="radio" name="q2" value="2" required> Written, but not widely known</label><label><input type="radio" name="q2" value="3" required> Written, shared, and followed</label></div></fieldset>
         <fieldset><legend><span class="q-num">Question 3 of 10</span>How comfortable is your team with everyday digital tools like email, shared documents, and online forms?</legend><div class="opts"><label><input type="radio" name="q3" value="0" required> Many people struggle</label><label><input type="radio" name="q3" value="1" required> Comfort is mixed</label><label><input type="radio" name="q3" value="2" required> Most are comfortable</label><label><input type="radio" name="q3" value="3" required> Nearly everyone is comfortable</label></div></fieldset>
@@ -493,41 +549,29 @@
       </form>
 
       <div class="result" id="result" hidden tabindex="-1">
-        <p class="label">Your Result</p>
-        <h2 id="result-title"></h2>
-        <p class="result-score" id="result-score"></p>
-        <p id="result-body"></p>
+        <div class="result-card">
+          <p class="rc-eyebrow">Your Result</p>
+          <div class="gauge" aria-hidden="true">
+            <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="g-track"/><circle cx="60" cy="60" r="52" class="g-fill" id="g-fill" transform="rotate(-90 60 60)"/></svg>
+            <span class="g-num"><b id="g-score">0</b><small>out of 30</small></span>
+          </div>
+          <h2 id="result-title"></h2>
+          <p class="rc-score" id="result-score"></p>
+          <p class="rc-body" id="result-body"></p>
+          <div class="areas-wrap">
+            <p class="rc-eyebrow">Your Score by Area</p>
+            <ul class="area-scores" id="area-scores" aria-label="Score by area"></ul>
+            <p class="rc-gap" id="rc-gap"></p>
+          </div>
+        </div>
         <div class="result-next">
           <h3>Recommended next step</h3>
           <p id="result-next"></p>
           <a class="btn" id="result-link" href="/education/">See the Program</a>
         </div>
-
-        <form class="contact-form" id="rc-form" name="readiness-check" method="POST" action="/thanks-check.html" data-netlify="true" netlify-honeypot="company-website">
-          <input type="hidden" name="form-name" value="readiness-check">
-          <input type="hidden" name="subject" value="New Adonaviv website inquiry from the AI readiness check">
-          <input type="hidden" name="score" id="f-score">
-          <input type="hidden" name="result" id="f-result">
-          <input type="hidden" name="answers" id="f-answers">
-          <p class="hp"><label>Leave this empty <input name="company-website" tabindex="-1" autocomplete="off"></label></p>
-          <h3>Get your results and a short action plan by email</h3>
-          <p class="form-intro">We'll email your score, what it means for your team, and three practical steps you can start this month. No newsletter unless you ask for one.</p>
-          <div class="row">
-            <div class="field"><label for="rc-name">Name</label><input id="rc-name" name="name" type="text" autocomplete="name" required></div>
-            <div class="field"><label for="rc-email">Email</label><input id="rc-email" name="email" type="email" autocomplete="email" required></div>
-          </div>
-          <div class="row">
-            <div class="field"><label for="rc-org">Organization <span class="opt">(optional)</span></label><input id="rc-org" name="organization" type="text" autocomplete="organization"></div>
-            <div class="field"><label for="rc-size">Team size</label>
-              <select id="rc-size" name="team_size" required>
-                <option value="">Choose one</option><option>Just me</option><option>2 to 10</option><option>11 to 50</option><option>51 to 200</option><option>More than 200</option>
-              </select></div>
-          </div>
-          <button class="btn" type="submit" id="rc-send">Email My Results</button>
-        </form>
-        <div class="sent" id="rc-sent" hidden tabindex="-1">
-          <h3>Got it. Your results are on the way.</h3>
-          <p>We'll email your score, what it means for your team, and three practical steps you can start this month, within one business day. Your results stay on this page in the meantime.</p>
+        <div class="sent" id="rc-sent" tabindex="-1">
+          <h3>Email my results</h3>
+          <p id="rc-sent-text">Your results and a short action plan are on the way. Expect them within one business day.</p>
         </div>
         <p class="retake"><button class="linkish" type="button" id="retake">Retake the check</button></p>
       </div>
@@ -536,9 +580,16 @@
 
 <script>
 (function(){
-  var form=document.getElementById('quiz'); if(!form) return;
+  var start=document.getElementById('rc-form'), form=document.getElementById('quiz'); if(!form||!start) return;
   var qs=form.querySelectorAll('fieldset'), total=qs.length;
   var prog=document.getElementById('quiz-progress'), note=document.getElementById('quiz-note');
+  function show(el){ el.hidden=false; el.scrollIntoView({block:'start'}); }
+  start.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!start.checkValidity()){ start.reportValidity(); return; }
+    post().catch(function(){});
+    start.hidden=true; show(form); var first=form.querySelector('input'); if(first) first.focus({preventScroll:true});
+  });
   function answered(){ var n=0; [].forEach.call(qs,function(f){ if(f.querySelector('input:checked')) n++; }); return n; }
   form.addEventListener('change',function(){ prog.textContent=answered()+' of '+total+' answered'; note.hidden=true; });
   var tiers=[
@@ -546,32 +597,55 @@
     {max:20,title:'Building momentum',body:'Some people on your team are already using AI, but it is uneven and mostly self taught. The gap now is shared skills, shared rules, and knowing where AI saves the most time.',next:'A private team program that measures where everyone stands, trains to the gaps, and leaves you with tested workflows.',link:'/team-training/',cta:'See Team Training'},
     {max:30,title:'Ready to scale',body:'Your team has the habits and support to get real value from AI. The opportunity now is turning individual wins into systems: automations, shared assistants, and workflows the whole organization uses.',next:'Role based workshops plus systems that put AI to work in your daily operations.',link:'/systems/',cta:'See Systems and Automation'}
   ];
+  function post(){
+    return fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(start)).toString()})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); return r; });
+  }
+  function send(){
+    var txt=document.getElementById('rc-sent-text'), email=document.getElementById('rc-email').value;
+    document.getElementById('f-stage').value='Completed';
+    post().then(function(){ txt.textContent='Your results and a short action plan are on the way to '+email+'. Expect them within one business day.'; })
+      .catch(function(){ txt.textContent='We could not send your results just now. Please email hello@adonaviv.com and we will send them to you.'; });
+  }
   form.addEventListener('submit',function(e){
     e.preventDefault();
     if(answered()<total){ note.hidden=false; var first=[].filter.call(qs,function(f){return !f.querySelector('input:checked');})[0]; if(first) first.querySelector('input').focus(); return; }
     var score=0, ans=[];
     [].forEach.call(qs,function(f,i){ var c=f.querySelector('input:checked'); score+=Number(c.value); ans.push('Q'+(i+1)+': '+c.parentNode.textContent.trim()); });
-    var t=tiers.filter(function(x){return score<=x.max;})[0];
+    var max=total*3, t=tiers.filter(function(x){return score<=x.max;})[0];
+    var AREAS=[
+      {name:'Skills',hint:'Digital comfort, AI use, training, and checking output',q:[0,2,3,4]},
+      {name:'Guidance',hint:'Rules for safe use and leadership support',q:[1,7]},
+      {name:'Systems',hint:'Where information lives and how much work is still manual',q:[5,8]},
+      {name:'Adoption',hint:'Knowing where AI helps and how new tools take hold',q:[6,9]}
+    ];
+    var vals=[].map.call(qs,function(f){ return Number(f.querySelector('input:checked').value); });
+    var res=AREAS.map(function(a){ var got=a.q.reduce(function(n,i){return n+vals[i];},0), mx=a.q.length*3; return {name:a.name,hint:a.hint,got:got,max:mx,pct:got/mx}; });
+    var ul=document.getElementById('area-scores'); ul.replaceChildren();
+    var C=2*Math.PI*22;
+    res.forEach(function(a){
+      var li=document.createElement('li');
+      li.innerHTML='<svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="22" class="a-track"/><circle cx="28" cy="28" r="22" class="a-fill" transform="rotate(-90 28 28)" style="stroke-dasharray:'+(C*a.pct).toFixed(1)+' '+C.toFixed(1)+(a.pct===0?';stroke-linecap:butt':'')+'"/></svg>';
+      var t=document.createElement('div'); var b=document.createElement('b'); b.textContent=a.name; var sc=document.createElement('span'); sc.className='a-score'; sc.textContent=a.got+' of '+a.max; var h=document.createElement('small'); h.textContent=a.hint;
+      t.appendChild(b); t.appendChild(sc); t.appendChild(h); li.appendChild(t); ul.appendChild(li);
+    });
+    var sorted=res.slice().sort(function(x,y){return y.pct-x.pct;}), top=sorted[0], low=sorted[sorted.length-1];
+    document.getElementById('rc-gap').textContent = top.pct===low.pct ? 'Your scores are even across all four areas.' : 'Strongest area: '+top.name+'. Biggest opportunity: '+low.name+'.';
+    document.getElementById('f-areas').value=res.map(function(a){return a.name+' '+a.got+' of '+a.max;}).join(' | ')+' | Biggest opportunity: '+low.name;
     document.getElementById('result-title').textContent=t.title;
-    document.getElementById('result-score').textContent='Score: '+score+' out of '+(total*3);
+    document.getElementById('result-score').textContent='Score: '+score+' out of '+max;
+    document.getElementById('g-score').textContent=score;
+    var circ=2*Math.PI*52; var g=document.getElementById('g-fill'); g.style.strokeDasharray=(circ*score/max).toFixed(1)+' '+circ.toFixed(1);
     document.getElementById('result-body').textContent=t.body;
     document.getElementById('result-next').textContent=t.next;
     var l=document.getElementById('result-link'); l.href=t.link; l.textContent=t.cta;
-    document.getElementById('f-score').value=score+' of '+(total*3);
+    document.getElementById('f-score').value=score+' of '+max;
     document.getElementById('f-result').value=t.title;
     document.getElementById('f-answers').value=ans.join(' | ');
-    form.hidden=true; var r=document.getElementById('result'); r.hidden=false; r.focus(); r.scrollIntoView({block:'start'});
+    form.hidden=true; var r=document.getElementById('result'); show(r); r.focus({preventScroll:true});
+    send();
   });
-  var rc=document.getElementById('rc-form');
-  rc.addEventListener('submit',function(e){
-    if(!rc.checkValidity()) return;
-    e.preventDefault();
-    var btn=document.getElementById('rc-send'); btn.disabled=true; btn.textContent='Sending';
-    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(rc)).toString()})
-      .then(function(r){ if(!r.ok) throw new Error(r.status); rc.hidden=true; var ok=document.getElementById('rc-sent'); ok.hidden=false; ok.focus(); })
-      .catch(function(){ rc.submit(); });
-  });
-  document.getElementById('retake').addEventListener('click',function(){ form.reset(); prog.textContent='0 of '+total+' answered'; document.getElementById('result').hidden=true; form.hidden=false; rc.hidden=false; document.getElementById('rc-sent').hidden=true; var b=document.getElementById('rc-send'); b.disabled=false; b.textContent='Email My Results'; form.scrollIntoView({block:'start'}); });
+  document.getElementById('retake').addEventListener('click',function(){ form.reset(); prog.textContent='0 of '+total+' answered'; document.getElementById('result').hidden=true; show(form); });
 })();
 </script>
 
