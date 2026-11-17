@@ -460,6 +460,51 @@
   .area-scores small{font-size:13px; color:var(--on-navy-muted); line-height:1.4; margin-top:2px;}
   .rc-gap{margin:18px 0 0; font-size:16px; font-weight:700; color:var(--white);}
   @media (max-width:640px){ .area-scores{grid-template-columns:1fr;} }
+  /* update 8: training led hero with a sample result card */
+  .hero-note{margin-top:16px; font-size:14px; color:var(--on-navy-muted);}
+  .hero-sample{max-width:440px; justify-self:end; width:100%;}
+  .hs-card{background:var(--navy-2); border:1px solid var(--line-dark); border-radius:8px; padding:26px 28px; box-shadow:0 30px 60px rgba(4,12,30,0.45);}
+  .hs-eyebrow{font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin:0 0 16px;}
+  .hs-top{display:flex; gap:20px; align-items:center;}
+  .hs-gauge{position:relative; width:104px; height:104px; flex:none;}
+  .hs-gauge svg{width:100%; height:100%;}
+  .hs-gauge .g-fill{transition:none;}
+  .hs-gauge span{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--white);}
+  .hs-gauge b{font-size:30px; line-height:1;}
+  .hs-gauge small{font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--on-navy-muted); margin-top:3px;}
+  .hs-tier{font-size:20px; font-weight:700; color:var(--white); margin:0 0 6px;}
+  .hs-sub{font-size:14px; color:var(--on-navy); margin:0; line-height:1.45;}
+  .hs-areas{list-style:none; margin:22px 0 0; padding:0; display:grid; gap:10px;}
+  .hs-areas li{display:grid; grid-template-columns:82px 1fr; align-items:center; gap:12px; font-size:13px; color:var(--on-navy);}
+  .hs-areas i{display:block; height:8px; border-radius:4px; background:rgba(255,255,255,0.12); position:relative; overflow:hidden;}
+  .hs-areas i::after{content:""; position:absolute; inset:0 auto 0 0; width:var(--w); background:var(--gold); border-radius:4px;}
+  .hs-gap{margin:18px 0 0; font-size:14px; font-weight:700; color:var(--white);}
+  .hs-cap{margin-top:12px; font-size:13px; color:var(--on-navy-muted);}
+  @media (max-width:900px){ .hero-sample{justify-self:start; max-width:520px;} }
+  /* founder */
+  .founder-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:56px; align-items:start;}
+  .founder-id h2{font-size:clamp(28px,4vw,40px); line-height:1.1;}
+  .founder .credit{margin-top:16px; font-size:14px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#5E6A82;}
+  .founder-body p{font-size:18px; color:var(--body); margin:0 0 18px;}
+  @media (max-width:900px){ .founder-grid{grid-template-columns:1fr; gap:20px;} }
+  .caps.caps-3, #what-we-do .caps{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:900px){ #what-we-do .caps{grid-template-columns:1fr;} }
+  .program-pointer .program-head{border-bottom:0;}
+  .privacy-note{margin-top:16px; font-size:14px; color:var(--body); text-align:center;}
+  .privacy-note a{color:var(--ink);}
+  .form-intro a{color:var(--ink);}
+  .nav-cta{white-space:nowrap;}
+  /* readiness check: just me mode */
+  .quiz .for-me{display:none;}
+  .quiz.mode-me .for-me{display:inline;}
+  .quiz.mode-me .for-team{display:none;}
+  .rc-for{border:0; padding:0; margin:0 0 18px;}
+  .rc-for legend{font-weight:700; color:var(--ink); margin-bottom:10px; padding:0;}
+  .rc-for-opts{display:flex; gap:12px; flex-wrap:wrap;}
+  .rc-for-opts label{display:flex; align-items:center; gap:10px; border:1px solid var(--silver); border-radius:4px; padding:12px 16px; background:var(--white); cursor:pointer; min-height:44px;}
+  .rc-for-opts label:has(input:checked){border-color:var(--navy); box-shadow:inset 0 0 0 1px var(--navy);}
+  .contact-form .rc-for-opts label{flex:1 1 220px; flex-direction:row; font-size:16px;}
+  .contact-form .rc-for-opts input{width:auto; margin:0; padding:0; flex:none; accent-color:var(--navy);}
 
 .hero-proof img{height:auto;}
 .vh{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
@@ -579,7 +624,7 @@
       <div class="section-head">
         <p class="label">Examples</p>
         <h2>Systems already built and in use</h2>
-        <p>Built for businesses we run, where they're used every day. Details are anonymized, and live demos are available on request.</p>
+        <p>Most were built for businesses we run and are used every day. Details are anonymized, and live demos are available on request.</p>
       </div>
       <div class="feature">
         <div class="shot"><img src="/images/work/fcc-anon.webp" alt="Financial Command Center dashboard with income, expense, and fee tiles" width="800" height="447" loading="lazy" decoding="async"></div>
@@ -622,7 +667,7 @@
       <div class="stats">
         <div><strong>$46K&ndash;$77K</strong><span>Savings identified by a construction cost model built for a residential project</span></div>
         <div><strong>Minutes</strong><span>To review the monthly numbers, down from an evening of reconciliation</span></div>
-        <div><strong>In daily use</strong><span>Every example here runs real operations, not a demo environment</span></div>
+        <div><strong>Real operations</strong><span>The dashboard and documentation systems run day to day work. The property platform is a working prototype.</span></div>
       </div>
     </div>
   </section>
@@ -700,6 +745,7 @@
         <button class="btn" type="submit">Send Message</button>
         <p class="form-note" id="form-note" hidden></p>
       </form>
+      <p class="privacy-note">We use your details only to reply. See our <a href="/privacy/">privacy policy</a>.</p>
       <p class="alt-contact">Prefer email or phone? <a href="mailto:hello@adonaviv.com">hello@adonaviv.com</a> &middot; <a href="tel:+15402407959">540-240-7959</a></p>
     </div>
   </section>
@@ -709,12 +755,12 @@
   <div class="wrap top">
     <img src="/images/brand/logo-dark.svg" alt="Adonaviv" width="149" height="38" loading="lazy">
     <nav aria-label="Footer">
-      <a href="/education/">Education</a><a href="/team-training/">Team Training</a><a href="/ai-readiness-check/">AI Readiness Check</a><a href="/systems/">Systems &amp; Software</a><a href="/websites/">Websites</a><a href="/#work">Work</a><a href="#contact">Contact</a><a href="/accessibility/">Accessibility</a>
+      <a href="/education/">Education</a><a href="/team-training/">Team Training</a><a href="/ai-readiness-check/">AI Readiness Check</a><a href="/systems/">Systems &amp; Software</a><a href="/websites/">Websites</a><a href="/#work">Work</a><a href="#contact">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a>
     </nav>
   </div>
   <div class="wrap bottom">
     <span>&copy; <span id="year"></span> Adonaviv &middot; Virginia and beyond. All rights reserved.</span>
-    <span>Technology &middot; Systems &middot; Innovation</span>
+    <span>AI Training &middot; Systems &middot; Websites</span>
   </div>
 </footer>
 <script src="/main.js" defer></script>

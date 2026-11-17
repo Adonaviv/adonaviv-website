@@ -1,6 +1,11 @@
 (function(){
   var sel=document.getElementById('cf-topic');
-  [].forEach.call(document.querySelectorAll('[data-topic]'),function(a){ a.addEventListener('click',function(){ if(sel){ sel.value=a.getAttribute('data-topic'); } }); });
+  var msg=document.getElementById('cf-message'), filled='';
+  [].forEach.call(document.querySelectorAll('[data-topic]'),function(a){ a.addEventListener('click',function(){
+    if(sel){ sel.value=a.getAttribute('data-topic'); }
+    var pg=a.getAttribute('data-program');
+    if(pg && msg && (!msg.value || msg.value===filled)){ filled='I would like to learn more about '+pg+'. '; msg.value=filled; }
+  }); });
   var pre=document.body.getAttribute('data-topic'); if(sel && pre && !sel.value){ sel.value=pre; }
 })();
 try{document.getElementById('year').textContent=new Date().getFullYear();}catch(e){}
